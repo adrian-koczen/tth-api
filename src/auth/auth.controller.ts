@@ -1,20 +1,17 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { ApiTags } from '@nestjs/swagger';
+import { LoginUser } from './interfaces';
+import { ApiResponse } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(AuthGuard('local'))
+  @ApiResponse({ status: 200, description: 'Return authorization token.' })
   @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
-  }
-
-  @UseGuards(AuthGuard('jwt'))
-  @Get('hello')
-  hello(): string {
-    return 'HELLO';
+  login(@Body() Body: LoginUser) {
+    return this.authService.login(Body);
   }
 }

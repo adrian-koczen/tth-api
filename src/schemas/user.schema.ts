@@ -16,6 +16,11 @@ export class User {
   password: string;
 
   @ApiProperty()
+  @IsNotEmpty()
+  @Prop()
+  passwordAgain: string;
+
+  @ApiProperty()
   @IsEmail()
   @Prop()
   email: string;
