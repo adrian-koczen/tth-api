@@ -12,7 +12,7 @@ import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 // Schemas
-import { User, Profile } from 'src/schemas/user/createUser.schema';
+import { User, Profile } from 'src/schemas/user/User.schema';
 
 @ApiTags('user')
 @Controller('user')
