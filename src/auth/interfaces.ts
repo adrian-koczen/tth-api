@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 export class LoginUser {
   @ApiProperty()
   @IsNotEmpty()
-  username: string;
+  email: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -12,3 +12,8 @@ export class LoginUser {
 }
 
 export type Payload = { username: string };
+
+export enum Roles {
+  admin = 'admin',
+  user = 'user',
+}

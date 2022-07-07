@@ -6,7 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserDocument } from 'src/schemas/user.schema';
+import { CreateUserDocument } from 'src/schemas/user/createUser.schema';
 import { LoginUser } from './interfaces';
 import * as bcrypt from 'bcrypt';
 
@@ -14,12 +14,12 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    @InjectModel('User') private User: Model<UserDocument>,
+    @InjectModel('User') private User: Model<CreateUserDocument>,
   ) {}
 
   async login(body: LoginUser) {
-    const { username, password } = body;
-    const user = await this.User.findOne({ username });
+    const { email, password } = body;
+    const user = await this.User.findOne({ email });
     if (!user) {
       throw new NotFoundException('User not found.');
     }
