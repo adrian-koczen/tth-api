@@ -46,7 +46,7 @@ export class UsersController {
   @ApiOkResponse({ description: 'User email verified.' })
   @UseGuards(AuthGuard('jwt'))
   @UseGuards(ThrottlerGuard)
-  @Throttle(60, 3600)
+  @Throttle(20, 3600)
   @Post('/emailVerify')
   verifyEmail(@Req() req: Request, @Body() body: EmailVerify) {
     return this.UserService.verifyEmail(req.user, body);

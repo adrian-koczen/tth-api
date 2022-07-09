@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsNumber, Max } from 'class-validator';
-import { Roles } from 'src/auth/interfaces';
+import { Roles } from 'src/modules/auth/interfaces';
 
 @Schema()
 export class EmailVerify {
