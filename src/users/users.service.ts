@@ -3,6 +3,7 @@ import {
   Profile,
   CreateUserDocument,
   User,
+  EmailVerify,
 } from 'src/schemas/user/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -70,5 +71,27 @@ export class UsersService {
     user.profile = body;
     user.save();
     return 'Profile updated.';
+  }
+
+  async verifyEmail(requestUser, body: EmailVerify): Promise<any> {
+    const { verifyCode } = body;
+    const user = await this.User.findOne({ username: requestUser.username });
+
+    // Check if user is email verified or not
+    const isEmailVerified = user.emailVerified.isVerified;
+    if (isEmailVerified) {
+      throw new BadRequestException('User is email verified already.');
+    }
+
+    // Check verify code
+    if (verifyCode !== user.emailVerified.verifyCode) {
+      throw new BadRequestException('Wrong code');
+    }
+
+    user.emailVerified.isVerified = true;
+    user.emailVerified.verifyCode = null;
+    user.save();
+
+    return 'User email verified.';
   }
 }
