@@ -15,14 +15,17 @@ export class EmailVerified {
 
 @Schema()
 export class Profile {
+  @ApiProperty()
   @Prop()
   @IsNotEmpty()
   firstname: string;
 
+  @ApiProperty()
   @Prop()
   @IsNotEmpty()
   lastname: string;
 
+  @ApiProperty()
   @Prop()
   @IsNotEmpty()
   phoneNumber: string;
