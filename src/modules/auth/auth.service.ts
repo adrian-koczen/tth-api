@@ -1,4 +1,5 @@
 import {
+  UnauthorizedException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -20,14 +21,21 @@ export class AuthService {
   async login(body: LoginUser) {
     const { email, password } = body;
     const user = await this.User.findOne({ email });
+
+    // Not found user
     if (!user) {
-      throw new NotFoundException('User not found.');
+      throw new NotFoundException('USER_NOT_FOUND');
     }
 
     // Compare password
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
-      throw new ForbiddenException('Wrong credentials');
+      throw new UnauthorizedException('WRONG_CREDENTIALS');
+    }
+
+    // Check email verified
+    if (!user.emailVerified.isVerified) {
+      throw new ForbiddenException('EMAIL_NOT_VERIFIED');
     }
 
     return {
