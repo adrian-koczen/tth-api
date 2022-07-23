@@ -57,10 +57,6 @@ export class UsersService {
     return 'User created - email verify required.';
   }
 
-  async emailVerify(): Promise<string> {
-    return 'User email verified.';
-  }
-
   async remove(user: any): Promise<string> {
     await this.User.findOneAndDelete({ username: user.username });
     return 'User removed';
@@ -73,9 +69,9 @@ export class UsersService {
     return 'Profile updated.';
   }
 
-  async verifyEmail(requestUser, body: EmailVerify): Promise<any> {
-    const { verifyCode } = body;
-    const user = await this.User.findOne({ username: requestUser.username });
+  async verifyEmail(body: EmailVerify): Promise<any> {
+    const { verifyCode, username } = body;
+    const user = await this.User.findOne({ username: username });
 
     // Check if user is email verified or not
     const isEmailVerified = user.emailVerified.isVerified;

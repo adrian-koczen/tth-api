@@ -12,6 +12,11 @@ export class EmailVerify {
   @IsNumber()
   @Max(999999)
   verifyCode: number;
+
+  @ApiProperty()
+  @Prop()
+  @IsNotEmpty()
+  username: string;
 }
 
 @Schema()

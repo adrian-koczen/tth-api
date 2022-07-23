@@ -35,7 +35,7 @@ export class AuthService {
 
     // Check email verified
     if (!user.emailVerified.isVerified) {
-      throw new ForbiddenException('EMAIL_NOT_VERIFIED');
+      throw new ForbiddenException({ username: user.username });
     }
 
     return {

@@ -44,11 +44,10 @@ export class UsersController {
 
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'User email verified.' })
-  @UseGuards(AuthGuard('jwt'))
   @UseGuards(ThrottlerGuard)
   @Throttle(20, 3600)
   @Post('/emailVerify')
-  verifyEmail(@Req() req: Request, @Body() body: EmailVerify) {
-    return this.UserService.verifyEmail(req.user, body);
+  verifyEmail(@Body() body: EmailVerify) {
+    return this.UserService.verifyEmail(body);
   }
 }
